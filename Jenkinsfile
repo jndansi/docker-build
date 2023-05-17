@@ -9,18 +9,31 @@ pipeline {
             }
         }
 
-        stage('Build and Push Docker Image') {
+        stage('Build Docker Image') {
             steps {
+                // Build the Docker image using Dockerfile in your repository
                 script {
-                    // Build the Docker image using the Dockerfile in the repository
-                    def dockerImage = docker.build('jndansi/new-fruit')
-
-                    // Push the Docker image to Docker Hub
+                    docker.build('jndansi/new-fruit:latest', '.')
+                }
+            }
+        }
+        
+        stage('Push Docker Image') {
+            steps {
+                // Push the Docker image to a Docker registry (e.g., Docker Hub)
+                script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                        dockerImage.push()
+                        docker.image('jndansi/new-fruit:latest').push()
                     }
                 }
             }
         }
     }
 }
+
+
+
+
+
+
+
