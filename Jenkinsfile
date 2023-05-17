@@ -23,7 +23,7 @@ pipeline {
         }
       }
     }
-            
+    
      // Uploading Docker images into Docker Hub
     stage('Upload Image') {
      steps{    
